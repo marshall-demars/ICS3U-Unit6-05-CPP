@@ -4,52 +4,49 @@
 // Created on: Jan 2023
 // This program calculates the average mark
 
+#include <cmath>
 #include <iostream>
-#include <list>
+#include <string>
 
-float findsTheAverage(std::list<float> marks) {
-    // This function finds the average
+float roundOffNumber(float &decimalNumber, int decimalPlaces) {
+    // This function rounds off numbers
+    float roundedOff;
+    int tempInt;
 
-    float average;
-    int element;
-    float total = 0;
+    // pow() is a power function
+    roundedOff = decimalNumber * pow(10, decimalPlaces);
+    roundedOff = (roundedOff + 0.5);
+    // static_cast converts ints and floats
+    roundedOff = static_cast<int>(roundedOff);
+    roundedOff = roundedOff / pow(10, decimalPlaces);
 
-    for (auto element : marks) {
-        total += element;
-    }
-    average = total / marks.size();
-
-    return average;
+    decimalNumber = roundedOff;
 }
 
 int main() {
-    // This function makes the list
+    std::string userNumberString;
+    std::string decimalPlacesString;
+    int decimalPlaces;
+    float userNumber;
+    float roundedNumber;
 
-    float average;
-    float tempInt;
-    std::list<float> marks;
-    std::string tempNumber = "";
-    std::list<std::string> reversedWords;
-
-    std::cout << "Please enter 1 mark at a time. Enter -1 to end." << std::endl;
+    std::cout << "Enter the number you want to round: ";
+    std::cin >> userNumberString;
+    std::cout << "" << std::endl;
+    std::cout << "Enter the decimal places you want to round by: ";
+    std::cin >> decimalPlacesString;
     std::cout << "" << std::endl;
 
-    while (tempNumber != "-1") {
-        try {
-            std::cout << "What is your mark (as %): ";
-            std::cin >> tempNumber;
-            tempInt = stof(tempNumber);
-            if (tempInt <= 100 & tempInt >= 0) {
-                marks.push_back(tempInt);
-            } else if (tempInt == -1) {
-                average = findsTheAverage(marks);
-                std::cout << "\nThe average is " << average << "%" << std::endl;
-                break;
-            }
-        } catch (std::invalid_argument) {
-            std::cout << "\nInvalid input." << std::endl;
-            continue;
-        }
+    try {
+        userNumber = std::stof(userNumberString);
+        decimalPlaces = std::stoi(decimalPlacesString);
+
+        // calls function
+        roundOffNumber(userNumber, decimalPlaces);
+
+        std::cout << "The rounded number is " << userNumber << std::endl;
+    } catch (std::invalid_argument) {
+        std::cout << "Invalid Input." << std::endl;
     }
 
     std::cout << "\nDone." << std::endl;
